@@ -1,0 +1,13 @@
+### POST request to create a new patient
+POST http://localhost:4000/patients
+Content-Type: application/json
+
+{
+  "name": "Jane Smith",
+  "email": "",
+  "address": "5th Avenue New Street",
+  "dateOfBirth": "1997-06-10",
+  "registeredDate": "2025-04-08"
+}
+
+###
