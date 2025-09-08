@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
   "name": "Jane Smith",
-  "email": "",
+  "email": "jane123@gmail.com",
   "address": "5th Avenue New Street",
   "dateOfBirth": "1997-06-10",
   "registeredDate": "2025-04-08"
