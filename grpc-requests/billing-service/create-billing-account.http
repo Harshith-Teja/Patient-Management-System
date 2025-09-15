@@ -1,0 +1,8 @@
+#Format: localhost:portNo/ServiceName/GrpcMethodName
+GRPC localhost:9001/BillingService/CreateBillingAccount
+
+{
+  "id": "1233",
+  "name": "John Doe",
+  "email": "john.doe@example.com"
+}
