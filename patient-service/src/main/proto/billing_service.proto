@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option java_multiple_files = true; //generates separate files for req's and response's
+option java_package = "billing"; //builds all the files into "billing" package
+
+service BillingService {
+  rpc CreateBillingAccount (BillingRequest) returns (BillingResponse);
+}
+
+message BillingRequest { //similar to DTO, the 1, 2, 3 nos help in serialization de-serialization and uniquely identifying the properties
+  string id = 1;
+  string name = 2;
+  string email = 3;
+}
+
+message BillingResponse {
+  string accountId = 1;
+  string status = 2;
+}
