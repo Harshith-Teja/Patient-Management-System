@@ -1,0 +1,28 @@
+server:
+  port: 4004
+
+spring:
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            #REST CLIENT - http://localhost:4004/api/patients
+            #API GATEWAY - http://patient-service:4000/patients
+            #PATIENT SERVICE (SPRING BOOT APP) -> /patients -> List of Patients
+            - id : patient-service-route
+              uri : http://patient-service:4000
+              predicates:
+                - path = /api/patients/**
+              filters:
+                - strip-prefix = 1 #removes the /api from the request
+
+
+          #REST CLIENT - http://localhost:4004/api-docs/patient
+          #API GATEWAY - http://paitent-service:4000/v3/api-docs
+            - id: api-docs-patient-route
+              uri: http://patient-service:4000
+              predicates:
+                - path = /api-docs/patient
+              filters:
+                - rewrite-path = /api-docs/patient, /v3/api-docs #replaces /api-docs/patient with /v3/api-docs in url
