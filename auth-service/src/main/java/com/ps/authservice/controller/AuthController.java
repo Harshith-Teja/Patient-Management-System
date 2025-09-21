@@ -6,9 +6,7 @@ import com.ps.authservice.dto.LoginResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -34,5 +32,19 @@ public class AuthController {
         String token = tokenOptional.get(); //gets the token in string format from optional obj
 
         return new ResponseEntity<>(new LoginResponseDTO(token), HttpStatus.OK);
+    }
+
+    @Operation(summary = "Validate Token")
+    @GetMapping("/validate")
+    public ResponseEntity<Void> validateToken (@RequestHeader("Authorization") String authHeader) {
+
+        if(authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        //authHeader format : Bearer <token>
+        return authService.validateToken(authHeader.substring(7))
+                ? new ResponseEntity<>(HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 }
