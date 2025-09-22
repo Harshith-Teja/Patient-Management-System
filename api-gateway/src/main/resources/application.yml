@@ -7,6 +7,15 @@ spring:
       server:
         webflux:
           routes:
+            #REST CLIENT - http://localhost:4005/auth/login
+            #API GATEWAY - http://auth-service:4005/login
+            - id : auth-service-route
+              uri : http://auth-service:4005
+              predicates:
+                - Path=/auth/**
+              filters:
+                - StripPrefix=1
+
             #REST CLIENT - http://localhost:4004/api/patients
             #API GATEWAY - http://patient-service:4000/patients
             #PATIENT SERVICE (SPRING BOOT APP) -> /patients -> List of Patients
@@ -16,6 +25,7 @@ spring:
                 - Path=/api/patients/**
               filters:
                 - StripPrefix=1 #removes the /api from the request
+                - JwtValidation #protects the patients routes, by giving access to only valid jwts
 
 
           #REST CLIENT - http://localhost:4004/api-docs/patients
